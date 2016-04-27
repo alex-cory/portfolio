@@ -1,0 +1,20 @@
+.hidden {
+  display: none;
+}
+
+.nav {
+  padding: 20px 0;
+  letter-spacing: 1px;
+  -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+  -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+  transition: background .5s ease-in-out,padding .5s ease-in-out;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 100;
+  background-color: transparent;
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}

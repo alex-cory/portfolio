@@ -4,15 +4,105 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Alex Cory</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <style>
+      .gallery {
+          display: inline-block;
+          margin-top: 20px;
+      }
+
+      /* ==============================================
+         To allow usage of video controls for fancybox
+         ============================================== */
+      .fancybox-type-iframe .fancybox-nav {
+          width: 60px;
+      }
+
+      .fancybox-type-iframe .fancybox-nav span {
+          visibility: visible;
+          opacity: 0.5;
+      }
+
+      .fancybox-type-iframe .fancybox-nav:hover span {
+          opacity: 1;
+      }
+
+      .fancybox-type-iframe .fancybox-next {
+          right: -60px;
+      }
+
+      .fancybox-type-iframe .fancybox-prev {
+          left: -60px;
+      }
+
+      /* =====================================================
+         To collapse and expand the nav bar & activate buttons
+         ===================================================== */
+      .top-nav-collapse {
+        padding: 0 !important;
+        background-color: rgba(0, 0, 0, 0.8) !important;
+        border-bottom: 1px solid rgba(255,255,255,.3);
+      }
+      .active {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+      }
+    </style>
+    <!-- Fonts -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   </head>
-  <body>
+  <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
     <div id="root"></div>
     <script type="text/javascript">
       // Force `fetch` polyfill to workaround Chrome not displaying request body
       // in developer tools for the native `fetch`.
       self.fetch = null;
     </script>
-    <script src="http://localhost:3000/webpack-dev-server.js"></script>
+    <!-- <script src="http://localhost:3000/webpack-dev-server.js"></script> -->
+
     <script src="src/app.js"></script>
+    <script src="//code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        // TODO: move out of here and into `Navbar.jsx`
+        // $('.page-scroll a').bind('click', function(event) {
+        //   console.log('CLICKED');
+        //     var $anchor = $(this);
+        //     var $section = $($anchor.attr('href'));
+        //     var scrollPos = $anchor.hasClass('bottom') ? $section.offset().top + $section.outerHeight() - $(window).height() : $section.offset().top;
+        //     $('html, body').stop().animate({
+        //         scrollTop: scrollPos
+        //     }, 1500, 'easeInOutExpo');
+
+        //     event.preventDefault();
+        // });
+
+        // TODO: move out of here and into `Play section`
+        //FANCYBOX
+        //https://github.com/fancyapps/fancyBox
+        $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none",
+            // this helper stops fancybox from directing you to the top of the page
+            helpers: {
+              overlay: {
+                locked: false
+              }
+            },
+            nextEffect  : 'none',
+            prevEffect  : 'none',
+            padding     : 0,
+            margin      : [20, 60, 20, 60], // Increase left/right margin
+            scrollOutside: 0,
+            titlePosition: 'inside'
+        });
+      });
+    </script>
   </body>
 </html>

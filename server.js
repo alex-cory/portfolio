@@ -1,16 +1,19 @@
-import express from 'express';
-import graphQLHTTP from 'express-graphql';
-import path from 'path';
-import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
-import {Schema} from './src/data/schema';
-// var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
+import express from 'express'
+import graphQLHTTP from 'express-graphql'
+import path from 'path'
+import webpack from 'webpack'
+import WebpackDevServer from 'webpack-dev-server'
+// import HtmlWebpackPlugin from 'html-webpack-plugin'
+// import BowerWebpackPlugin from 'bower-webpack-plugin'
+
+import { Schema } from './src/data/schema'
+// let Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
 
 const APP_PORT = 3000;
 const GRAPHQL_PORT = 8080;
 
 // Expose a GraphQL endpoint
-var graphQLServer = express();
+let graphQLServer = express();
 graphQLServer.use('/', graphQLHTTP({
   graphiql: true,
   pretty: true,
@@ -20,9 +23,29 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
   `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}`
 ));
 
+let sassParams = [
+  'outputStyle=expanded',
+  'includePaths[]=' + path.resolve(__dirname, './src'),
+  'includePaths[]=' + path.resolve(__dirname, './node_modules')
+];
+
+sassParams.push('sourceMap', 'sourceMapContents=true');
+
+let sassLoader = [
+  'style-loader',
+  'css-loader?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]',
+  'postcss-loader',
+  'sass-loader?' + sassParams.join('&')
+].join('!');
+
+let cssLoader = [
+  'style-loader',
+  'css-loader?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]',
+  'postcss-loader'
+].join('!');
 
 
-// var webpack_isomorphic_tools_plugin =
+// let webpack_isomorphic_tools_plugin =
 //   // webpack-isomorphic-tools settings reside in a separate .js file
 //   // (because they will be used in the web server code too).
 //   new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'))
@@ -31,13 +54,14 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 //   .development()
 
 // Serve the Relay app
-var compiler = webpack({
-  context: __dirname + '/src',
+let compiler = webpack({
+  devtool: "eval-source-map",
+  context: __dirname + '/',
   entry: path.resolve(__dirname, 'src', 'app.jsx'),
   output: {
     filename: 'app.js',
-    path: '/',
-    publicPath: '/'
+    path: '/public',            // webpack-dev-server will serve the static files from here. It’ll watch your source files for changes and when changes are made the bundle will be recompiled.
+    publicPath: './'            // This modified bundle is served from memory at the relative path specified here.  It will not be written to your configured output directory.
   },
   module: {
     loaders: [
@@ -48,9 +72,26 @@ var compiler = webpack({
       },
       /* For Loading Images in CSS/SCSS Files */
       {
-        test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$|.mp4$/,
-        loader: 'url-loader?limit=8192'
-        // loader: 'file-loader?name=images/[name].[ext]'
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        loader: 'url-loader'
+      },
+      /* Compiles css -> js */
+      {
+        test: /\.css$/,
+        loader: cssLoader
+      },
+      /* Compiles sass -> css -> js */
+      {
+        test: /\.scss$/,
+        loader: sassLoader
+      },
+      /* DOESN'T WORK :( */
+      {
+        test: /\.(webm|mp4|mov|mpeg|avi|m4v|ogg)$/,
+        // loader: 'file-loader?name=videos/[name].[ext]'
+        loader: 'url-loader?limit=100000'
+        // loader: 'file-loader'
+        // loader: 'file'
       },
       /* For loading images and video files */
       // {
@@ -60,18 +101,34 @@ var compiler = webpack({
     ]
   },
   resolve: {
-    moduleDirectories: ['node_modules', './src'],
+    moduleDirectories: ['node_modules', './src', 'public', 'bower_components'],
     extensions: ['', '.js', '.json', '.jsx']
   },
-  // plugins: [
-  //   webpack_isomorphic_tools_plugin
-  // ]
+  plugins: [
+    // webpack_isomorphic_tools_plugin
+    new webpack.ProvidePlugin({
+        // Makes the keys (i.e. $, _, classNames, etc.) available in any module
+        $:          'jquery',
+        jQuery:     'jquery',
+        _:          'lodash',
+        classNames: 'classnames',
+        my:         path.resolve(__dirname, 'config/config.js')
+    }),
+    // new HtmlWebpackPlugin()
+    // Supposed to load bower assets
+    // new webpack.ResolverPlugin(
+    //     new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
+    // )
+    // new BowerWebpackPlugin()
+  ]
 });
-var app = new WebpackDevServer(compiler, {
-  contentBase: '/public/',
+let app = new WebpackDevServer(compiler, {
+  contentBase: path.resolve(__dirname, 'public'),//'/public/',
   proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
   publicPath: '/src/',
-  stats: {colors: true}
+  stats: {colors: true},
+  inline: true,
+  historyApiFallback: true
 });
 // Serve static resources
 app.use('/', express.static(path.resolve(__dirname, 'public')));

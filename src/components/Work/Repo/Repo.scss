@@ -1,0 +1,72 @@
+.repoName {
+	text-align: left;
+	margin-bottom: 0;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.repoDescription {
+	font-size: 15px;
+}
+
+.repoImageThumb {
+	background-image: url('http://lorempixel.com/400/300/sports/4/');
+	background-size: cover;
+	background-position: center;
+	height: 195px;
+	vertical-align: 0;
+}
+
+.repoLinks {
+	display: inline;
+	padding: 0;
+	color: rgb(100, 100, 100);
+}
+
+.thumbnail {
+	position:relative;
+	overflow:hidden;
+	padding: 0;
+	margin-bottom: 0;
+	border-radius: 4px 4px 0 0;
+  border: 1px solid #ddd;
+}
+
+.thumbnail2 {
+	display: block;
+	margin-bottom: 20px;
+	line-height: 1.428571429;
+	background-color: #fff;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+
+.caption {
+	position:absolute;
+	bottom:-100%;
+	right:0;
+	background: rgba(0, 0, 0, 0.65);
+	width:100%;
+	height:100%;
+	padding:1%;
+	text-align: center;
+	color:#fff !important;
+	z-index:2;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+.thumbnail2:hover .caption {
+	bottom:0%;
+}
+
+.glyph {
+	margin-left: .4em;
+}
+
+.textCenter {
+	padding: 5px 15px;
+	text-align:center;
+}

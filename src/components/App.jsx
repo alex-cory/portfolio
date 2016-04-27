@@ -1,30 +1,29 @@
-import React from 'react';
-import Relay from 'react-relay';
-import MediumPosts from './MediumPosts.jsx'
-import PlayList from './PlayList.jsx';
+import React, { Component } from 'react'
+import Relay from 'react-relay'
 
-class App extends React.Component {
+import Navbar from './Navbar/Navbar.jsx'
+import Top from './Top/Top.jsx'
+import Bio from './Bio/Bio.jsx'
+import Blog from './Blog/Blog.jsx'
+import Work from './Work/Work.jsx'
+import Play from './Play/Play.jsx'
+import Contact from './Contact/Contact.jsx'
+
+
+class App extends Component {
   render() {
-    // console.log('App: ', this.props.viewer);
+    // console.log('App: ', this.props.viewer)
     return (
       <div>
-        <h1>App</h1>
-        <ul>
-          {/*this.props.viewer.mediumPosts.edges.map(edge =>
-            <a key={edge.node.id} href={edge.node.url}>
-              <li key={edge.node.id}>{edge.node.title} (ID: {edge.node.id})</li>
-            </a>
-          )*/}
-        </ul>
-        <MediumPosts
-          viewer={this.props.viewer}
-        />
-        <PlayList
-          viewer={this.props.viewer}
-        />
-        {/*  */}
+        <Navbar/>
+        <Top/>
+        <Bio/>
+        <Work viewer={this.props.viewer} />
+        <Blog viewer={this.props.viewer} />
+        <Play viewer={this.props.viewer} />
+        <Contact/>
       </div>
-    );
+    )
   }
 }
 
@@ -32,9 +31,10 @@ export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        ${MediumPosts.getFragment('viewer')}
-        ${PlayList.getFragment('viewer')}
+        ${Work.getFragment('viewer')}
+        ${Blog.getFragment('viewer')}
+        ${Play.getFragment('viewer')}
       }
     `,
   },
-});
+})

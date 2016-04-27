@@ -46,7 +46,7 @@ npm-debug.log
 # Project Specific #
 ####################
 sandbox/
-src/constants/config.js
-src/constants/client_secret.json
+config/config.js
+config/client_secret.json
 src/data/schema.graphql
 src/data/schema.json

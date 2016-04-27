@@ -1,0 +1,82 @@
+.blogName {
+	text-align: left;
+	margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.blogLinks {
+  display: inline;
+  padding: 0;
+  font-weight: 400;
+  color: #646464;
+}
+
+.blogDescription {
+	font-size: 15px;
+}
+
+.blogImage {
+	border-radius: 6px 6px 0 0;
+	border: 1px solid #fff;
+	border-bottom: 0;
+}
+
+.blogImageThumb {
+	background-image: url('http://lorempixel.com/400/300/sports/4/');
+	background-size: cover;
+	background-position: center;
+	height: 195px;
+	vertical-align: 0;
+}
+
+.blogLinks {
+	display: inline;
+	padding: 0;
+}
+
+.thumbnail {
+  position:relative;
+  overflow:hidden;
+  padding: 0;
+  margin-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #ddd;
+}
+
+.thumbnail2 {
+  display: block;
+  /*padding: 4px;*/
+  margin-bottom: 20px;
+  line-height: 1.428571429;
+  background-color: #fff;
+  /*border: 1px solid #ddd;*/
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.caption {
+  position:absolute;
+  bottom:-100%;
+  right:0;
+  background: rgba(0, 0, 0, 0.65);
+  width:100%;
+  height:100%;
+  padding:1%;
+  text-align:center;
+  color:#fff !important;
+  z-index:2;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.thumbnail2:hover .caption {
+  bottom:0%;
+}
+
+.glyph {
+  margin-left: .4em;
+}

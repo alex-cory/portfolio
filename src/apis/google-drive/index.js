@@ -1,16 +1,17 @@
-let fs = require('fs')
-let async = require("async")
-let ggl = require('googleapis')
-import { google } from '../../constants/config.js'
-import GoogleDoc from './GoogleDoc.js'
+import fs 	    from 'fs'
+import async    from 'async'
+import ggl      from 'googleapis'
+import * as my  from '../../../config/config.js'
 import jsonfile from 'jsonfile'
 
 async function getGoogleDocsData() {
-	let filesData = await getFilesFromGoogleDriveFolder('0B5LhVy_zkvWqc2N1ZTNPeFFFLTA')
+	let folderID = '0B5LhVy_zkvWqc2N1ZTNPeFFFLTA'
+	let filesData = await getFilesFromGoogleDriveFolder(folderID)
+	// console.log(filesData);
 	let cache = './cache/googleDocs.json'
 	await cacheData(filesData, cache) /* TODO: use a cron job for this every hour */
 	// let data = await getCachedData(cache)
-	console.log(filesData);
+	// console.log(filesData);
 	// return await getCachedData(cache)
 	// console.log(await getCachedData(cache))
 }
@@ -18,18 +19,49 @@ getGoogleDocsData()
 // let googleDocsData = getGoogleDocsData()
 // export default googleDocsData
 
-/*
- * To Test:
- * 1. remove `export default` from getFiles()
- * 2. uncomment `console.log(files)`
- * 3. comment out `return files`
- * 4. uncomment `getFiles()`
- * 5. run `babel-node connect2driveAsyncAwait.js` in your terminal
- */
+// function downloadImage(repoImageUrl) {
+// 	let imageName = path.basename(repoImageUrl) == 'CEDl74r.jpg' ? 'default.jpg' : path.basename(repoImageUrl)
+// 	return new Promise((accept, reject) => {
+// 		download(repoImageUrl, `../../components/Work/Repo/img/${imageName}`, () => {
+// 			return accept(`./img/${imageName}`)
+// 		})
+// 	})
+// }
+
+// function download(uri, filename, callback){
+//   request.head(uri, function(err, res, body){
+//     // console.log('content-type:', res.headers['content-type'])
+//     // console.log('content-length:', res.headers['content-length'])
+//     request(uri)
+//     	.pipe(fs.createWriteStream(filename))
+//     	.on('close', callback)
+//   })
+// }
+function downloadFiles(files, location, drive) {
+	for (let file of files) {
+		let fileType = file.mimeType.indexOf('image') > -1 ? 'img' : 'vid'
+		if (fileType === 'img') {
+			let dest = fs.createWriteStream(`${location}/${fileType}/${file.title}`);
+			drive.files.export({
+			   fileId: file.id,
+			   mimeType: file.mimeType
+			})
+			.on('end', function() {
+			  console.log('Done');
+			})
+			.on('error', function(err) {
+			  console.log('Error during download', err);
+			})
+			.pipe(dest);
+		}
+	}
+}
+
 async function getFilesFromGoogleDriveFolder(folderId) {
 	let drive = await setupDrive()
 	let fileIds = await getFileIdsFromFolder(folderId, drive)
 	let files = await getFileData(fileIds, drive)
+	// await downloadFiles(files, '/public', drive) /* TODO: currently this is only images. need to do for video as well */
 	// console.log(files)
 	return files
 }
@@ -39,7 +71,7 @@ async function getFilesFromGoogleDriveFolder(folderId) {
 function setupDrive() {
 	let drive
 	let OAuth2 = ggl.auth.OAuth2
-	let oauth2Client = new OAuth2(google.CLIENT_ID, google.CLIENT_SECRET, google.REDIRECT_URL[0])
+	let oauth2Client = new OAuth2(my.google.CLIENT_ID, my.google.CLIENT_SECRET, my.google.REDIRECT_URL[0])
 	let TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) + '/.credentials/'
 	let TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json'
 
@@ -86,8 +118,6 @@ function getFileIdsFromFolder(folderId, drive) {
 		    console.log('No files found.')
 
 		  } else {
-		  	// return accept(files)
-		  	// console.log(files);
 
 		    for (let file of files) {
 		      fileIds.push(file.id);
@@ -110,7 +140,7 @@ function getFileData(fileIds, drive) {
 			let options = {
 				fileId: task.fileId,
 				// fields: 'alternateLink,description,downloadUrl,fileSize,id,imageMediaMetadata(height,width),thumbnail,thumbnailLink,title,webContentLink,webViewLink'
-				fields: 'description,id,imageMediaMetadata(height,width),parents/id,thumbnail/image,thumbnailLink,title,videoMediaMetadata'
+				fields: 'description,webContentLink,mimeType,id,imageMediaMetadata(height,width),parents/id,thumbnail/image,thumbnailLink,title,videoMediaMetadata'
 			}
 
 			// Making the request to Google Drive to get the data for each file
@@ -121,11 +151,7 @@ function getFileData(fileIds, drive) {
 				}
 
 				let data = response
-				// console.log(data);
-				files.push(
-					data
-					// new GoogleDoc(data)
-				)
+				files.push(data)
 
 			})
 

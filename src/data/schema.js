@@ -34,9 +34,15 @@ import {
   MediumPost,
   getMediumPost,
   getMediumPosts,
+
   GoogleDoc,
   getGoogleDoc,
   getGoogleDocs,
+
+  Repo,
+  getRepo,
+  getRepos,
+
   User,
   getUser,
   getViewer
@@ -55,6 +61,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
       return getMediumPost(id);
     } else if (type === 'GoogleDoc') {
       return getGoogleDoc(id);
+    } else if (type === 'Repo') {
+      return getRepo(id);
     } else if (type === 'User') {
       return getUser(id);
     } else {
@@ -66,6 +74,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
       return mediumPostType;
     } else if (obj instanceof GoogleDoc) {
       return googleDocType;
+    } else if (obj instanceof Repo) {
+      return repoType;
     } else if (obj instanceof User) {
       return userType;
     } else {
@@ -94,6 +104,18 @@ let mediumPostType = new GraphQLObjectType({
     url: {
       type: GraphQLString,
       description: 'The url leading to the medium post'
+    },
+    content: {
+      type: GraphQLString,
+      description: 'The short description of the medium post'
+    },
+    image: {
+      type: GraphQLString,
+      description: 'The image for the medium post'
+    },
+    likes: {
+      type: GraphQLInt,
+      description: 'The amount of likes for this medium post'
     }
   }),
   interfaces: [nodeInterface],
@@ -104,9 +126,17 @@ let googleDocType = new GraphQLObjectType({
   description: 'A file from Google Drive!',
   fields: () => ({
     id: globalIdField('GoogleDoc'),
+    name: {
+      type: GraphQLString,
+      description: 'The name of the file'
+    },
     url: {
       type: GraphQLString,
       description: 'The url linking directly to the image or video'
+    },
+    iframe: {
+      type: GraphQLString,
+      description: 'The url used for the iframe'
     },
     thumb: {
       type: GraphQLString,
@@ -119,10 +149,54 @@ let googleDocType = new GraphQLObjectType({
     downloadUrl: {
       type: GraphQLString,
       description: 'This is a url that will instantly download the file'
+    },
+    isImage: {
+      type: GraphQLBoolean,
+      description: 'Is the file an image?'
     }
   }),
   interfaces: [nodeInterface],
 });
+
+let repoType = new GraphQLObjectType({
+  name: 'Repo',
+  description: 'A repository from github',
+  fields: () => ({
+    id: globalIdField('Repo'),
+    name: {
+      type: GraphQLString,
+      description: 'the name of the repository'
+    },
+    url: {
+      type: GraphQLString,
+      description: 'url to the repository'
+    },
+    description: {
+      type: GraphQLString,
+      description: 'the description of the repository'
+    },
+    stars: {
+      type: GraphQLInt,
+      description: 'the stargazers count for the repository'
+    },
+    forks: {
+      type: GraphQLInt,
+      description: 'the amount of forks the repository has'
+    },
+    downloadUrl: {
+      type: GraphQLString,
+      description: 'url for automatic download of the repository'
+    },
+    imageUrl: {
+      type: GraphQLString,
+      description: 'raw url to the repository\'s image'
+    },
+    image: {
+      type: GraphQLString,
+      description: 'when complete will be the local path to the repos image'
+    }
+  })
+})
 
 let userType = new GraphQLObjectType({
   name: 'User',
@@ -140,6 +214,12 @@ let userType = new GraphQLObjectType({
       description: 'A person\'s google drive files from within the specified folder',
       args: connectionArgs,
       resolve: (_, args) => connectionFromArray(getGoogleDocs(), args),
+    },
+    repos: {
+      type: repoConnection,
+      description: 'The repositories from the specified user\'s github.',
+      args: connectionArgs,
+      resolve: (_, args) => connectionFromArray(getRepos(), args),
     }
   }),
   interfaces: [nodeInterface],
@@ -153,6 +233,9 @@ let {connectionType: mediumPostConnection} =
 
 let {connectionType: googleDocConnection} =
   connectionDefinitions({name: 'GoogleDoc', nodeType: googleDocType});
+
+let {connectionType: repoConnection} =
+  connectionDefinitions({name: 'Repo', nodeType: repoType});
 
 /**
  * This is the type that will be the root of our query,

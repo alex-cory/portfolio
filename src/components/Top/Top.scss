@@ -1,0 +1,57 @@
+// @import 'styles!css!scss!../../constants/variables.scss';
+
+// $brand-color: #61dafb;
+// $header-color: #4CB729;
+
+.bannerTitle {
+  margin: 0;
+  padding: 10px;
+  font-weight: normal;
+  font-size: 4em;
+  line-height: 1em;
+}
+
+.brandHeading {
+  font-size: 100px;
+}
+
+.introBody {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.introText {
+  font-size: 25px;
+}
+
+.intro {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+    background: url('./Top.jpg') no-repeat fixed top center; /* ../img/tedxpurdueu.jpg || http://goo.gl/AN74Ei */
+    /*background: url(../img/green_envy.jpg) no-repeat fixed; // ../img/tedxpurdueu.jpg || http://goo.gl/AN74Ei */
+    /*
+     * autumn:        http://goo.gl/5LVIum;
+     * fireflies:     http://goo.gl/AN74Ei;
+     * jellyfish:     http://goo.gl/FRJo3V;
+     * cherries:      http://goo.gl/mOgGfs;
+     * cherries2:     http://goo.gl/LHrTlG;
+     * smart light:   http://goo.gl/NwYozX;
+     * explode light: http://goo.gl/PmnbBY;
+     *
+     */
+    /*background-color: #000;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.pullMiddle {
+    position: relative;
+    bottom: 2.35em;
+    left: -0.4em;
+}

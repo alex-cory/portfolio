@@ -6,32 +6,26 @@
  *  LICENSE file in the root directory of this source tree. An additional grant
  *  of patent rights can be found in the PATENTS file in the same directory.
  */
-let mediumPostsData = require('../apis/scrape-medium/cache/blogPosts.json')
-let googleDocsData = require('../apis/google-drive/cache/googleDocs.json')
+import mediumPostsData from '../apis/scrape-medium/data.json'
+import googleDocsData from '../apis/google-drive/data.json'
+import githubReposData from '../apis/github/data.json'
 
 // Model types
-class MediumPost {}
-class GoogleDoc {
-  constructor(id, name, caption, folderId, thumb) {
-    this.id = id || null
-    this.name = name || null
-    this.url = folderId && name ? `https://googledrive.com/host/${folderId}/${name}` : null
-    // this.rawUrl = id ? `https://googledrive.com/host/${this.folderId}/[file name].jpg`
-    // this.rawUrl = id ? `https://drive.google.com/uc?export=view&id=[id]` : null;
-    this.folderId = folderId || null
-    this.thumb = thumb || null
-    this.caption = caption || null
-  }
-}
-class User {}
+import MediumPost from './MediumPost.js'
+import GoogleDoc from './GoogleDoc.js'
+import Repo from './Repo.js'
+import User from './User.js'
 
-var mediumPosts = mediumPostsData.map((mediumPostData, i) => {
-  var mediumPost = new MediumPost();
-  mediumPost.title = mediumPostData.title;
-  mediumPost.id = `${i}`;
-  mediumPost.date = `${mediumPostData.date}`;
-  mediumPost.url = mediumPostData.url;
-  return mediumPost;
+var mediumPosts = mediumPostsData.map((data, i) => {
+  return new MediumPost(
+    `${i}`,
+    data.title,
+    `${data.date}`,
+    data.url,
+    data.content,
+    data.image,
+    data.likes
+  )
 })
 
 var googleDocs = googleDocsData.map((data, i) => {
@@ -40,26 +34,44 @@ var googleDocs = googleDocsData.map((data, i) => {
     data.title,          // name
     data.description,    // caption
     data.parents[0].id,  // folderId
-    data.thumbnailLink   // thumb
-
+    data.thumbnailLink,  // thumb
+    data.webContentLink, // downloadUrl
+    data.mimeType        // type
   )
 })
-// console.log(googleDocs);
+
+let githubRepos = githubReposData.map((data, i) => {
+  return new Repo(
+    `${i}`,           // id
+    data.name,        // name
+    data.url,         // url to repo
+    data.description, // description
+    data.stars,       // stargazers count
+    data.forks,       // forks count
+    data.downloadUrl, // url for automatic download
+    data.imageUrl,    // raw url to repo image
+    data.image        // TODO: once working, local path to the repos image
+  )
+})
 
 // Mock data
-var viewer = new User();
-viewer.id = '1';
-viewer.name = 'Anonymous';
+let viewer = new User(
+  '1',        // id
+  'Anonymous' // name
+)
 
 module.exports = {
   // Export methods that your schema can use to interact with your database
+  MediumPost,
   getMediumPost: (id) => mediumPosts.find(post => post.id === id),
   getMediumPosts: () => mediumPosts,
+  GoogleDoc,
   getGoogleDoc: (id) => googleDocs.find(doc => doc.id === id),
   getGoogleDocs: () => googleDocs,
+  Repo,
+  getRepo: (id) => githubRepos.find(repo => repo.id === id),
+  getRepos: () => githubRepos,
+  User,
   getUser: (id) => id === viewer.id ? viewer : null,
   getViewer: () => viewer,
-  MediumPost,
-  GoogleDoc,
-  User,
-};
+}
