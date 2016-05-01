@@ -3,11 +3,9 @@ import { Row, Col, Button, Glyphicon } from 'react-bootstrap'
 import s from './Repo.scss'
 
 export default class Repo extends Component {
-
   constructor(props) {
     super(props)
   }
-
 
   render() {
   	let styles = {
@@ -62,18 +60,6 @@ export default class Repo extends Component {
           </div>
 
         </div>
-        {/* Modal */}
-        {/*
-          <RepoModal
-            key={this.props.id}
-            name={this.props.name}
-            url={this.props.url}
-            image={this.props.image}
-            description={this.props.description}
-            stars={this.props.stars}
-            downloadUrl={this.props.downloadUrl}
-          />
-        */}
       </Col>
     )
   }

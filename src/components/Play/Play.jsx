@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Relay from 'react-relay'
 import s from './Play.scss'
 import { Col, Row } from 'react-bootstrap'
-import PlayList from './PlayList/PlayList.jsx';
-import HeaderImage from '../Misc/HeaderImage/HeaderImage.jsx'
+import PlayList from './PlayList/PlayList';
+import HeaderImage from '../Misc/HeaderImage/HeaderImage'
 
 class Play extends Component {
 	constructor(props) {
@@ -11,7 +11,6 @@ class Play extends Component {
 	}
 
   render() {
-
     return (
       <div id="play">
 
@@ -24,7 +23,7 @@ class Play extends Component {
         />
 
 	      {/* Play Content Section */}
-	      <section className={classNames('container', s.contentSection)}>
+	      <section className={classNames('container', s.content)}>
           <Row>
             <h1>Play</h1>
             <p>Although Alex loves his work more than just about anything else, he also loves to play. :)</p>

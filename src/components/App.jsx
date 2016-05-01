@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 
-import Navbar from './Navbar/Navbar.jsx'
-import Top from './Top/Top.jsx'
-import Bio from './Bio/Bio.jsx'
-import Blog from './Blog/Blog.jsx'
-import Work from './Work/Work.jsx'
-import Play from './Play/Play.jsx'
-import Contact from './Contact/Contact.jsx'
+import Navbar from './Navbar/Navbar'
+import Top from './Top/Top'
+import Bio from './Bio/Bio'
+import Blog from './Blog/Blog'
+import Work from './Work/Work'
+import Play from './Play/Play'
+import Contact from './Contact/Contact'
 
 
 class App extends Component {
   render() {
-    // console.log('App: ', this.props.viewer)
     return (
       <div>
         <Navbar/>

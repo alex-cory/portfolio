@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
-import PlayItem from '../PlayItem/PlayItem.jsx'
+import PlayItem from '../PlayItem/PlayItem'
 import { Row } from 'react-bootstrap'
 
 class PlayList extends Component {
@@ -9,7 +9,6 @@ class PlayList extends Component {
   }
 
   render() {
-    // console.log('PLAY LIST: ', this.props.viewer);
 		let media = []
 		let edges = this.props.viewer.googleDocs.edges
     let node

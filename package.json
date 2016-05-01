@@ -6,7 +6,8 @@
   "version": "0.1.0",
   "scripts": {
     "start": "babel-node ./server.js",
-    "update-schema": "babel-node ./src/data/updateSchema.js"
+    "update-schema": "babel-node ./src/data/updateSchema.js",
+    "deploy": "pm2 start server.js --interpreter ./node_modules/.bin/babel-node --watch --name alexcory.com"
   },
   "dependencies": {
     "babel-core": "^6.5.2",
@@ -30,7 +31,6 @@
   },
   "devDependencies": {
     "async": "^2.0.0-rc.1",
-    "babel-cli": "^6.5.1",
     "babel-plugin-transform-class-properties": "^6.6.0",
     "bootstrap": "^3.3.6",
     "bootstrap-loader": "^1.0.9",

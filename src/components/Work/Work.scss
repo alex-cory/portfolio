@@ -1,62 +1,18 @@
-/* =========================================================================
-                            Definitely Good
-   =======================================================================*/
 .work {
     background: url('./Work.jpg') no-repeat fixed; /* http://goo.gl/5LVIum */
     -webkit-background-size: cover;
     padding: 100px 0;
 }
 
-.contentSection {
+.content {
     padding-top: 125px;
     padding-bottom: 125px;
 }
 
-// .work2 {
-//     display: table;
-//     width: 100%;
-//     height: auto;
-//     padding: 100px 0;
-//     text-align: center;
-//     color: #fff;
-//     /*background: url(../img/green_envy.jpg) no-repeat fixed; // ../img/tedxpurdueu.jpg || http://goo.gl/AN74Ei */
-//     /*
-//      * autumn:        http://goo.gl/5LVIum;
-//      * fireflies:     http://goo.gl/AN74Ei;
-//      * jellyfish:     http://goo.gl/FRJo3V;
-//      * cherries:      http://goo.gl/mOgGfs;
-//      * cherries2:     http://goo.gl/LHrTlG;
-//      * smart light:   http://goo.gl/NwYozX;
-//      * explode light: http://goo.gl/PmnbBY;
-//      *
-//      */
-//     /*background-color: #000;*/
-//     -webkit-background-size: cover;
-//     -moz-background-size: cover;
-//     background-size: cover;
-//     -o-background-size: cover;
-// }
-
-
-.projMainClr {
+.clr {
     color: orange;
 }
-.projMainClr:hover {
+
+.clr:hover {
     color: red;
-}
-/* =========================================================================
-                            Still Deciding
-   =======================================================================*/
-
-@media(min-width:767px) {
-    .content-section {
-        padding-top: 125px;
-        padding-bottom: 125px;
-    }
-}
-
-.m-proj-btm {
-    /* color: #77E400; */
-    border: 2px solid blue;
-    /* height: 12em; */
 }

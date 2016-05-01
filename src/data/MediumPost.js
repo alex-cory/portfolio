@@ -1,5 +1,5 @@
 export default class MediumPost {
-  constructor(id, title, date, url, content, image, likes) {
+  constructor(id, title, date, url, content, image, likes, name, username) {
     this.id = id
     this.title = title
     this.date = date
@@ -7,5 +7,7 @@ export default class MediumPost {
     this.content = content
     this.image = image
     this.likes = likes
+    this.name = name
+    this.username = username
   }
 }

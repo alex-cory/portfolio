@@ -1,8 +1,12 @@
 /**
  * YOU NEED TO RENAME THIS FILE TO `config.js` AND FILL IN YOUR INFORMATION
+ *
+ * This file is loaded via the webpack config using the ProvidePlugin. Basically, in any react
+ * component that you use the variable `my`, you will be able to access these variables.
+ * (ex: my.github.username returns 'alex-cory')
  */
 export const github = {
-	username: '',
+	username: 'alex-cory',
 	url: 'https://github.com/alex-cory',
 	ACCESS_TOKEN: '',
 	CLIENT_ID: '',

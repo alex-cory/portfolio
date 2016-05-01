@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay';
-import Repo from '../Repo/Repo.jsx'
+import Repo from '../Repo/Repo'
 import { Row } from 'react-bootstrap'
 
-export default class RepoList extends Component {
+class RepoList extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    // console.log('REPO LIST: ', this.props.viewer);
-
     // Sort the repos by star count
     let reposData = this.props.viewer.repos.edges.sort((a, b) => {
       return parseFloat(b.node.stars) - parseFloat(a.node.stars)
@@ -43,7 +41,6 @@ export default class RepoList extends Component {
     )
   }
 }
-
 
 export default Relay.createContainer(RepoList, {
   fragments: {

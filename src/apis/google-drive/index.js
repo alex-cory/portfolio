@@ -139,7 +139,6 @@ function getFileData(fileIds, drive) {
 
 			let options = {
 				fileId: task.fileId,
-				// fields: 'alternateLink,description,downloadUrl,fileSize,id,imageMediaMetadata(height,width),thumbnail,thumbnailLink,title,webContentLink,webViewLink'
 				fields: 'description,webContentLink,mimeType,id,imageMediaMetadata(height,width),parents/id,thumbnail/image,thumbnailLink,title,videoMediaMetadata'
 			}
 
@@ -167,9 +166,7 @@ function getFileData(fileIds, drive) {
 			// Push all the file id's into the task queue
 		  taskQueue.push({fileId}, (err) => {
 		  	// Done
-		  	if (err) {
-		  		console.log(err)
-		  	}
+		  	if (err) throw err
 		  })
 		}
 

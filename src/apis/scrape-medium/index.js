@@ -5,14 +5,14 @@ import cheerio from 'cheerio'
 saveMediumPostsDataFrom('fasthacks')
 
 async function saveMediumPostsDataFrom(username) {
-	let mediumUrl = `https://medium.com/@${username}/latest?count=1000`
-	let data = await scrapeMedium(mediumUrl)
+	let data = await scrapeMedium(username)
 	fs.writeFile('./data.json', JSON.stringify(data, null, 4), err => {
     if (err) throw err
 	})
 }
 
-function scrapeMedium(mediumUrl) {
+function scrapeMedium(username) {
+  let mediumUrl = `https://medium.com/@${username}/latest?count=1000`
 	return new Promise((accept, reject) => {
 		request(mediumUrl, (error, response, html) => {
 	    if(!error){
@@ -31,9 +31,11 @@ function scrapeMedium(mediumUrl) {
        		data.image = $('.graf-image').eq(i).attr('src')
        		data.content = $('.section-inner').eq(i).children().last().text()
           data.likes = parseInt($('.button--chromeless[data-action=show-recommends]').eq(i).text()) // || 0
+          data.name = $('.hero-title').children().text()
+          data.username = username
        		posts.push(data)
         })
-        return accept(posts)
+        accept(posts)
 	    }
 		})
 	})

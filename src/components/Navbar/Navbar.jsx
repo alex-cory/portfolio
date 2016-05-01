@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import NavSection from './NavSection/NavSection.jsx'
-import NavButton from './NavButton/NavButton.jsx'
+import NavSection from './NavSection/NavSection'
+import NavButton from './NavButton/NavButton'
 import s from './Navbar.scss'
 
 export default class Navbar extends Component {
@@ -80,17 +80,3 @@ export default class Navbar extends Component {
     )
 	}
 }
-
-
-  // TODO: move out of here and into `Navbar.jsx`
-  // $('.page-scroll a').bind('click', function(event) {
-  //   console.log('CLICKED');
-  //     var $anchor = $(this);
-  //     var $section = $($anchor.attr('href'));
-  //     var scrollPos = $anchor.hasClass('bottom') ? $section.offset().top + $section.outerHeight() - $(window).height() : $section.offset().top;
-  //     $('html, body').stop().animate({
-  //         scrollTop: scrollPos
-  //     }, 1500, 'easeInOutExpo');
-
-  //     event.preventDefault();
-  // });

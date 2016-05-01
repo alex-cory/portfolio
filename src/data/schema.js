@@ -116,6 +116,14 @@ let mediumPostType = new GraphQLObjectType({
     likes: {
       type: GraphQLInt,
       description: 'The amount of likes for this medium post'
+    },
+    name: {
+      type: GraphQLString,
+      description: 'The name of the author of the medium post'
+    },
+    username: {
+      type: GraphQLString,
+      description: 'The username of the author of the medium post'
     }
   }),
   interfaces: [nodeInterface],

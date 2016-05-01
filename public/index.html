@@ -53,6 +53,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="//cdn-static-1.medium.com/_/fp/css/fonts-base.by5Oi_VbnwEIvhnWIsuUjA.css" rel="stylesheet">
   </head>
   <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
     <div id="root"></div>
@@ -61,8 +62,6 @@
       // in developer tools for the native `fetch`.
       self.fetch = null;
     </script>
-    <!-- <script src="http://localhost:3000/webpack-dev-server.js"></script> -->
-
     <script src="src/app.js"></script>
     <script src="//code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -70,22 +69,21 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script>
       $(document).ready(function(){
-        // TODO: move out of here and into `Navbar.jsx`
-        // $('.page-scroll a').bind('click', function(event) {
-        //   console.log('CLICKED');
-        //     var $anchor = $(this);
-        //     var $section = $($anchor.attr('href'));
-        //     var scrollPos = $anchor.hasClass('bottom') ? $section.offset().top + $section.outerHeight() - $(window).height() : $section.offset().top;
-        //     $('html, body').stop().animate({
-        //         scrollTop: scrollPos
-        //     }, 1500, 'easeInOutExpo');
+        // TODO: move out of here and into `Navbar section`
+        // Ease-in-out Scrolling
+        $('body').on('click', '.page-scroll a', function(e) {
+          var $anchor = $(this);
+          var $section = $($anchor.attr('href'));
+          var scrollPos = $anchor.hasClass('bottom') ? $section.offset().top + $section.outerHeight() - $(window).height() : $section.offset().top;
 
-        //     event.preventDefault();
-        // });
+          $('html, body').stop().animate({
+              scrollTop: scrollPos
+          }, 1500, 'easeInOutExpo');
 
-        // TODO: move out of here and into `Play section`
+          e.preventDefault();
+        });
+
         //FANCYBOX
-        //https://github.com/fancyapps/fancyBox
         $(".fancybox").fancybox({
             openEffect: "none",
             closeEffect: "none",

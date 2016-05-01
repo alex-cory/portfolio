@@ -16,7 +16,7 @@ export default class Contact extends Component {
 
                   <p>Good luck:</p>
 
-                  <p>Feel free to email me to provide some feedback on my site, I'll consider any suggestions for new ideas, or to just say hello!</p>
+                  <p>I'm a really busy person, but feel free to reach out! :)</p>
                   <p><a href="mailto:results@alexcory.com">results@alexcory.com</a></p>
                 </div>
               </div>

@@ -3,19 +3,24 @@
   left: 46%;
   top: 33%;
   font-size: 40px;
-  // color: #fff;
 }
+
 .transition {
   color: #fff;
 }
 
 .transition:hover {
   color: #646464;
-  transition: all .2s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.playImageThumb:hover {
+  box-shadow: 0 0 7px 1px whitesmoke;
+  color: #whitesmoke;
 }
 
 .playImageThumb {
-	background-image: url('http://lorempixel.com/400/300/sports/4/');
+	// background-image: url('http://lorempixel.com/400/300/sports/4/');
 	background-size: cover;
 	height: 190px;
 	vertical-align: 0;
@@ -23,4 +28,5 @@
   margin-bottom: 20px;
   width: 262.5px;
   border: 2px solid #ddd;
+  transition: box-shadow 0.3s ease-in-out;
 }

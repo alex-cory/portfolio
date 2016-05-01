@@ -24,7 +24,9 @@ var mediumPosts = mediumPostsData.map((data, i) => {
     data.url,
     data.content,
     data.image,
-    data.likes
+    data.likes,
+    data.name,
+    data.username
   )
 })
 

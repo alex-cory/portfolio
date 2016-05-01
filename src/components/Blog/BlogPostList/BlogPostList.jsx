@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay';
 import { Row } from 'react-bootstrap'
-import BlogPost from '../BlogPost/BlogPost.jsx'
+import BlogPost from '../BlogPost/BlogPost'
 
 export default class BlogPostList extends Component {
   constructor(props) {
@@ -20,11 +20,13 @@ export default class BlogPostList extends Component {
           <BlogPost
             key={edge.node.id}
             title={edge.node.title}
-            date={this.props.date}
+            date={edge.node.date}
             url={edge.node.url}
             content={edge.node.content}
             image={edge.node.image}
             likes={edge.node.likes}
+            name={edge.node.name}
+            username={edge.node.username}
           />
         )}
       </Row>
@@ -46,6 +48,8 @@ export default Relay.createContainer(BlogPostList, {
               content
               image
               likes
+              name
+              username
             }
           }
         }
