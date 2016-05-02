@@ -15,10 +15,11 @@ import gm 			from 'gm'
  *
  * @return {array} Array of repo objects
  */
-async function getRepos() {
+export default async function saveReposData() {
 	let repos = []
 	let imageName
 	let ext
+	let localImagePath
 
 	// Get the data for each repository and make it pretty
 	let data = await getData()
@@ -26,22 +27,45 @@ async function getRepos() {
 	for (let repo of data) {
 		// Add image urls to the data
 		repo.imageUrl = await getImageUrl(repo.name)
-		// Download the image and save the relative path to `repo.image` (ex: ./img/repo.png)
-		repo.image = await downloadImage(repo.imageUrl)
-		// Add the repo to the array
-		repos.push(repo)
 
 		imageName = path.basename(repo.imageUrl) == 'CEDl74r.jpg' ? 'default.jpg' : path.basename(repo.imageUrl)
-		// Resize and Optimize each image to help with page speed
-		await resizeImage(imageName, 720, 450)
-		await optimizeImage(imageName)
+		localImagePath = `../../components/Work/Repo/img/${imageName}`
+
+		if (imageExists(localImagePath)) {
+			repo.image = `./img/${imageName}`
+		} else {
+			repo.image = await downloadImage(repo.imageUrl)
+			// Resize and Optimize each image to help with page speed
+			await resizeImage(imageName, 720, 450)
+			await optimizeImage(imageName)
+		}
+
+		// Add the repo to the array
+		repos.push(repo)
 	}
 
+	let cache = path.resolve(__dirname, './data.json')
 	// Cache the data so we can use local data instead of relying on external apis
-	await cacheData(repos, './cache/githubRepos.json')
+	await cacheData(repos, cache)
 }
-getRepos()
+// getRepos()
 
+function imageExists(image) {
+	return new Promise((accept, reject) => {
+		fs.stat(image, (err, stat) => {
+		    if(err == null) {
+		    	accept(true)
+		        // console.log('File exists');
+		    } else if(err.code == 'ENOENT') {
+		    	reject(false)
+		        fs.writeFile('log.txt', err.code);
+		    } else {
+		    	reject(false)
+		        console.log('Some other error: ', err.code);
+		    }
+		});
+	})
+}
 
 /**
  * Takes an image, runs it through a minimizer, then replaces
@@ -219,6 +243,7 @@ function download(uri, filename, callback){
  * @return {}
  */
 function cacheData(data, location) {
+	if (!data) data = []
 	jsonfile.writeFile(location, data, (err) => {
 		if (err) console.error(err)
 	})

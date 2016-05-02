@@ -1,21 +1,22 @@
 import fs 	    from 'fs'
+import path     from 'path'
 import async    from 'async'
 import ggl      from 'googleapis'
 import * as my  from '../../../config/config.js'
 import jsonfile from 'jsonfile'
 
-async function getGoogleDocsData() {
+export default async function saveGoogleDriveData() {
 	let folderID = '0B5LhVy_zkvWqc2N1ZTNPeFFFLTA'
 	let filesData = await getFilesFromGoogleDriveFolder(folderID)
 	// console.log(filesData);
-	let cache = './cache/googleDocs.json'
+	let cache = path.resolve(__dirname, './data.json')
 	await cacheData(filesData, cache) /* TODO: use a cron job for this every hour */
 	// let data = await getCachedData(cache)
 	// console.log(filesData);
 	// return await getCachedData(cache)
 	// console.log(await getCachedData(cache))
 }
-getGoogleDocsData()
+// getGoogleDocsData()
 // let googleDocsData = getGoogleDocsData()
 // export default googleDocsData
 
@@ -178,6 +179,7 @@ function getFileData(fileIds, drive) {
 }
 
 function cacheData(data, location) {
+	if (!data) data = []
 	jsonfile.writeFile(location, data, (err) => {
 		if (err) console.error(err)
 	})

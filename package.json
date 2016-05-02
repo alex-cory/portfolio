@@ -36,6 +36,7 @@
     "bootstrap-loader": "^1.0.9",
     "bootstrap-sass": "^3.3.6",
     "cheerio": "^0.20.0",
+    "cron": "^1.1.0",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "file-type": "^3.8.0",

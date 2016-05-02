@@ -1,12 +1,14 @@
 import request from 'request'
 import fs 		 from 'fs'
 import cheerio from 'cheerio'
+import path    from 'path'
 
-saveMediumPostsDataFrom('fasthacks')
+// saveMediumPostsDataFrom('fasthacks')
 
-async function saveMediumPostsDataFrom(username) {
-	let data = await scrapeMedium(username)
-	fs.writeFile('./data.json', JSON.stringify(data, null, 4), err => {
+export default async function saveMediumPostsDataFrom(username) {
+	let data = await scrapeMedium(username) || []
+  let location = path.resolve(__dirname, './data.json')
+	fs.writeFile(location, JSON.stringify(data, null, 4), err => {
     if (err) throw err
 	})
 }
