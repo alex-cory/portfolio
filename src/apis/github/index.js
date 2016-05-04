@@ -6,23 +6,42 @@ import github 	from 'octonode'
 import * as my 	from '../../../config/config.js'
 import Imagemin from 'imagemin'
 import gm 			from 'gm'
+import chalk from 'chalk'
+import { updateFile, diff } from '../../../scripts/helpers.js'
+
+
+export default async function updateReposData() {
+	let liveDataFile = path.resolve(__dirname, './data.json')
+  let freshData = await getReposDataFrom('alex-cory')
+  let liveData = require(liveDataFile)
+
+  // if there's a difference between the data live on the site now and the data just scraped from medium
+  if (diff(liveData, freshData)) {
+    // update the live data
+    await updateFile(liveDataFile, freshData)
+    console.log(chalk.blue('Github repos have been updated!'));
+    // restart the server to show changes (stop the server, pm2 will start it back up)
+    process.exit(1)
+  }
+}
 
 /**
- * Returns a list of repos
+ * Returns a promise containing a list of repos
  *
  * TODO:
  *  - diffing algorithm
  *
  * @return {array} Array of repo objects
  */
-export default async function saveReposData() {
+async function getReposDataFrom(username) {
+	// Get the data for each repository and make it pretty
+	let data = await getInitialReposDataFrom(username)
+
 	let repos = []
 	let imageName
 	let ext
 	let localImagePath
 
-	// Get the data for each repository and make it pretty
-	let data = await getData()
 
 	for (let repo of data) {
 		// Add image urls to the data
@@ -44,11 +63,10 @@ export default async function saveReposData() {
 		repos.push(repo)
 	}
 
-	let cache = path.resolve(__dirname, './data.json')
-	// Cache the data so we can use local data instead of relying on external apis
-	await cacheData(repos, cache)
+	return new Promise((accept, reject) => {
+		accept(repos)
+	})
 }
-// getRepos()
 
 function imageExists(image) {
 	return new Promise((accept, reject) => {
@@ -124,7 +142,7 @@ function resizeImage(image, width, height) {
  * Provides the data for a specific user's github repositories.
  * @return {Promise:Array} Array of repo objects.
  */
-function getData() {
+function getInitialReposDataFrom(username) {
 	let client = github.client(my.github.ACCESS_TOKEN)
 
 	return new Promise((accept, reject) => {
@@ -134,7 +152,7 @@ function getData() {
 			let repos = []
 
 		  for(let repo of body) {
-		  	if (repo.owner.login == 'alex-cory') {
+		  	if (repo.owner.login == username) {
 
 			  	repos.push({
 			  		name: repo.name,
@@ -152,7 +170,7 @@ function getData() {
 		})
 	})
 }
-// getData()
+// getInitialReposDataFrom('alex-cory')
 
 
 /**

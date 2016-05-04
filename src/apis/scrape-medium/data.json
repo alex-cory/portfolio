@@ -1,29 +1,38 @@
 [
     {
-        "date": "Mar 16",
-        "url": "https://medium.com/wappy-spayberry/a-new-post-92c13b3afb9?source=latest---------1",
-        "title": "A new post",
+        "date": "yesterday",
+        "url": "https://medium.com/@fasthacks/way-totally-cool-f1b1f2992dac?source=latest---------1",
+        "title": "567 WAY TOTALLY COOL",
         "image": "https://cdn-images-1.medium.com/fit/t/800/240/1*07IWFHtjGgTGn3plV8Xrxg.jpeg",
-        "content": "This is my new post.",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit…",
+        "likes": 1,
+        "name": "fasthacks.io",
+        "username": "fasthacks"
+    },
+    {
+        "date": "yesterday",
+        "url": "https://medium.com/@fasthacks/cool-story-bros-5e103f0e584?source=latest---------2",
+        "title": "Cool Story Bros",
+        "image": "https://cdn-images-1.medium.com/max/400/1*07IWFHtjGgTGn3plV8Xrxg.jpeg",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse…",
         "likes": 1,
         "name": "fasthacks.io",
         "username": "fasthacks"
     },
     {
         "date": "Mar 16",
-        "url": "https://medium.com/@fasthacks/test-96894f04e8ee?source=latest---------2",
-        "title": "test",
-        "image": "https://cdn-images-1.medium.com/max/400/1*07IWFHtjGgTGn3plV8Xrxg.jpeg",
-        "content": "this is a test blog post :p",
-        "likes": 1,
+        "url": "https://medium.com/wappy-spayberry/a-new-post-92c13b3afb9?source=latest---------3",
+        "title": "A new post",
+        "content": "This is my new post.",
+        "likes": null,
         "name": "fasthacks.io",
         "username": "fasthacks"
     },
     {
-        "date": "Feb 16",
-        "url": "https://medium.com/@fasthacks/test-1-22865fad94d8?source=latest---------3",
-        "title": "Test 1",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu posuere erat. Aenean justo nunc, efficitur vestibulum faucibus ac, efficitur a nunc. Nunc tincidunt tellus sit amet arcu vulputate, dictum molestie quam convallis. Pellentesque lacinia lorem in turpis tristique, sed rhoncus nulla tempor. Sed viverra…",
+        "date": "Mar 16",
+        "url": "https://medium.com/@fasthacks/test-96894f04e8ee?source=latest---------4",
+        "title": "test",
+        "content": "this is a test blog post :p",
         "likes": null,
         "name": "fasthacks.io",
         "username": "fasthacks"

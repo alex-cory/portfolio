@@ -2,15 +2,21 @@ import request from 'request'
 import fs 		 from 'fs'
 import cheerio from 'cheerio'
 import path    from 'path'
+import chalk from 'chalk'
+import { updateFile, diff } from '../../../scripts/helpers.js'
 
-// saveMediumPostsDataFrom('fasthacks')
+export default async function updateMediumData() {
+  let freshData = await scrapeMedium('fasthacks')
+  let liveData = require(path.resolve(__dirname, './data.json'))
 
-export default async function saveMediumPostsDataFrom(username) {
-	let data = await scrapeMedium(username) || []
-  let location = path.resolve(__dirname, './data.json')
-	fs.writeFile(location, JSON.stringify(data, null, 4), err => {
-    if (err) throw err
-	})
+  // if there's a difference between the data live on the site now and the data just scraped from medium
+  if (diff(liveData, freshData)) {
+    // update the live data
+    await updateFile('./src/apis/scrape-medium/data.json', freshData)
+    console.log(chalk.green('Medium has been updated!'));
+    // restart the server to show changes (stop the server, pm2 will start it back up)
+    process.exit(1)
+  }
 }
 
 function scrapeMedium(username) {

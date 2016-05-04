@@ -4,18 +4,36 @@ import async    from 'async'
 import ggl      from 'googleapis'
 import * as my  from '../../../config/config.js'
 import jsonfile from 'jsonfile'
+import chalk from 'chalk'
+import { updateFile, diff } from '../../../scripts/helpers.js'
 
-export default async function saveGoogleDriveData() {
-	let folderID = '0B5LhVy_zkvWqc2N1ZTNPeFFFLTA'
-	let filesData = await getFilesFromGoogleDriveFolder(folderID)
-	// console.log(filesData);
-	let cache = path.resolve(__dirname, './data.json')
-	await cacheData(filesData, cache) /* TODO: use a cron job for this every hour */
-	// let data = await getCachedData(cache)
-	// console.log(filesData);
-	// return await getCachedData(cache)
-	// console.log(await getCachedData(cache))
+
+export default async function updateGoogleDriveData() {
+	let liveDataFile = path.resolve(__dirname, './data.json')
+  let freshData = await await getFilesFromGoogleDriveFolder('0B5LhVy_zkvWqc2N1ZTNPeFFFLTA') // folder Id as argument
+  let liveData = require(liveDataFile)
+
+  // if there's a difference between the data live on the site now and the data just scraped from medium
+  if (diff(liveData, freshData)) {
+    // update the live data
+    await updateFile(liveDataFile, freshData)
+    console.log(chalk.cyan('Google Drive data has been updated!'));
+    // restart the server to show changes (stop the server, pm2 will start it back up)
+    process.exit(1)
+  }
 }
+
+// async function saveGoogleDriveData() {
+// 	let folderID = '0B5LhVy_zkvWqc2N1ZTNPeFFFLTA'
+// 	let filesData = await getFilesFromGoogleDriveFolder(folderID)
+// 	// console.log(filesData);
+// 	let cache = path.resolve(__dirname, './data.json')
+// 	await cacheData(filesData, cache) /* TODO: use a cron job for this every hour */
+// 	// let data = await getCachedData(cache)
+// 	// console.log(filesData);
+// 	// return await getCachedData(cache)
+// 	// console.log(await getCachedData(cache))
+// }
 // getGoogleDocsData()
 // let googleDocsData = getGoogleDocsData()
 // export default googleDocsData
@@ -64,7 +82,9 @@ async function getFilesFromGoogleDriveFolder(folderId) {
 	let files = await getFileData(fileIds, drive)
 	// await downloadFiles(files, '/public', drive) /* TODO: currently this is only images. need to do for video as well */
 	// console.log(files)
-	return files
+	return new Promise((accept, reject) => {
+		accept(files)
+	})
 }
 // getFilesFromGoogleDriveFolder('0B5LhVy_zkvWqc2N1ZTNPeFFFLTA')
 

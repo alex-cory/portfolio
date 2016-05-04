@@ -7,7 +7,7 @@
   "scripts": {
     "start": "babel-node ./server.js",
     "update-schema": "babel-node ./src/data/updateSchema.js",
-    "deploy": "pm2 start server.js --interpreter ./node_modules/.bin/babel-node --watch --name alexcory.com"
+    "deploy": "pm2 start server.js --interpreter ./node_modules/.bin/babel-node --name alexcory.com && pm2 logs alexcory.com"
   },
   "dependencies": {
     "babel-core": "^6.5.2",
@@ -52,6 +52,7 @@
     "imagemin": "^4.0.0",
     "jquery": "^2.2.1",
     "jquery-easing": "0.0.1",
+    "jsdiff": "^1.1.1",
     "jsdom": "^8.1.0",
     "jsonfile": "^2.2.3",
     "less": "^2.6.1",

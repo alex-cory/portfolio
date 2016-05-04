@@ -6,36 +6,35 @@ import WebpackDevServer from 'webpack-dev-server'
 import { sassLoader, cssLoader, vidLoader } from './loaders.js'
 import { Schema } from './src/data/schema'
 import { CronJob } from 'cron'
-import saveMediumPostsDataFrom from './src/apis/scrape-medium/index.js'
-import saveReposData from './src/apis/github/index.js'
-import saveGoogleDriveData from './src/apis/google-drive/index.js'
+import updateMediumData from './src/apis/scrape-medium/index.js'
+import updateReposData from './src/apis/github/index.js'
+import updateGoogleDriveData from './src/apis/google-drive/index.js'
 import chalk from 'chalk'
 // import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 // Runs every minute
-var mediumJob = new CronJob('0 * * * * *', () => {
+var mediumJob = new CronJob('0  * * * * *', () => {
     console.log(chalk.green('Medium just happened'));
-    saveMediumPostsDataFrom('fasthacks')
+    updateMediumData()
   }, () => {
     // This function is executed when the job stops
-    // saveMediumPostsDataFrom('fasthacks')
   },
   true, // Start the job right now
   'America/Los_Angeles' // Time zone of this job.
 );
 
-// Runs every 10 minutes
-var jobs2 = new CronJob('0 */10 * * * *', () => {
-    // console.log(chalk.blue('Github just happened'));
-    saveReposData()
-    // console.log(chalk.cyan('Google Drive just happened'));
-    saveGoogleDriveData()
-  }, () => {
-    // This function is executed when the job stops
-    // saveMediumPostsDataFrom('fasthacks')
-  },
-  true, // Start the job right now
-  'America/Los_Angeles' // Time zone of this job.
+// Runs every 30 minutes
+var githubJob = new CronJob('0 */30 * * * *', () => {
+    console.log(chalk.blue('Github just happened'));
+    updateReposData()
+  }, () => {}, true, 'America/Los_Angeles'
+);
+
+// Runs every 20 minutes
+var googleDriveJob = new CronJob('0 */30 * * * *', () => {
+    console.log(chalk.cyan('Google Drive just happened'));
+    updateGoogleDriveData()
+  }, () => {}, true, 'America/Los_Angeles'
 );
 
 const APP_PORT = 3000;

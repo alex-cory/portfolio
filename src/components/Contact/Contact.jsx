@@ -14,7 +14,7 @@ export default class Contact extends Component {
                 <h2>Contact</h2>
                 <div className={s.mainContent} id='mchead'>
 
-                  <p>Good luck:</p>
+                  <p>Hi there!</p>
 
                   <p>I'm a really busy person, but feel free to reach out! :)</p>
                   <p><a href="mailto:results@alexcory.com">results@alexcory.com</a></p>
