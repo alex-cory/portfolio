@@ -2,6 +2,7 @@
     background: url('./Contact.jpg') no-repeat fixed; /* http://goo.gl/5LVIum */
     -webkit-background-size: cover;
     height: 100vh;
+    padding: 190px 0 100px 0;
 }
 
 .mainContent {
@@ -15,8 +16,4 @@
     background: rgba(26, 26, 26, 0.9);
     border-radius: 1em;
     color: white;
-}
-
-.contentSection {
-    padding: 190px 0 100px 0;
 }

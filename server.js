@@ -6,16 +6,17 @@ import WebpackDevServer from 'webpack-dev-server'
 import { sassLoader, cssLoader, vidLoader } from './loaders.js'
 import { Schema } from './src/data/schema'
 import { CronJob } from 'cron'
-import updateMediumData from './src/apis/scrape-medium/index.js'
-import updateReposData from './src/apis/github/index.js'
-import updateGoogleDriveData from './src/apis/google-drive/index.js'
+import updateMediumDataFrom from './src/apis/scrape-medium/index.js'
+import updateReposDataFrom from './src/apis/github/index.js'
+import updateGoogleDriveDataFrom from './src/apis/google-drive/index.js'
 import chalk from 'chalk'
+import * as my from './config/config.js'
 // import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 // Runs every minute
 var mediumJob = new CronJob('0  * * * * *', () => {
     console.log(chalk.green('Medium just happened'));
-    updateMediumData()
+    updateMediumDataFrom(my.medium.username)
   }, () => {
     // This function is executed when the job stops
   },
@@ -26,16 +27,17 @@ var mediumJob = new CronJob('0  * * * * *', () => {
 // Runs every 30 minutes
 var githubJob = new CronJob('0 */30 * * * *', () => {
     console.log(chalk.blue('Github just happened'));
-    updateReposData()
+    updateReposDataFrom(my.github.username)
   }, () => {}, true, 'America/Los_Angeles'
 );
 
 // Runs every 20 minutes
 var googleDriveJob = new CronJob('0 */30 * * * *', () => {
     console.log(chalk.cyan('Google Drive just happened'));
-    updateGoogleDriveData()
+    updateGoogleDriveDataFrom(my.google.drive.folderId)
   }, () => {}, true, 'America/Los_Angeles'
 );
+
 
 const APP_PORT = 3000;
 const GRAPHQL_PORT = 8080;
@@ -96,7 +98,6 @@ let compiler = webpack({
     extensions: ['', '.js', '.json', '.jsx']
   },
   plugins: [
-    // webpack_isomorphic_tools_plugin
     new webpack.ProvidePlugin({
         // Makes the keys (i.e. $, _, classNames, etc.) available in any module
         $:          'jquery',
@@ -106,10 +107,6 @@ let compiler = webpack({
         my:         path.resolve(__dirname, 'config/config.js')
     }),
     // new HtmlWebpackPlugin()
-    // Supposed to load bower assets
-    // new webpack.ResolverPlugin(
-    //     new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-    // )
   ]
 });
 
@@ -126,5 +123,4 @@ let app = new WebpackDevServer(compiler, {
 app.use('/', express.static(path.resolve(__dirname, 'public')));
 app.listen(APP_PORT, () => {
   console.log(`App is now running on http://localhost:${APP_PORT}`);
-
 });

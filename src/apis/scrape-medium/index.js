@@ -5,8 +5,8 @@ import path    from 'path'
 import chalk from 'chalk'
 import { updateFile, diff } from '../../../scripts/helpers.js'
 
-export default async function updateMediumData() {
-  let freshData = await scrapeMedium('fasthacks')
+export default async function updateMediumDataFrom(username) {
+  let freshData = await scrapeMedium(username)
   let liveData = require(path.resolve(__dirname, './data.json'))
 
   // if there's a difference between the data live on the site now and the data just scraped from medium

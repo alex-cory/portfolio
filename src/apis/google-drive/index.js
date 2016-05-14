@@ -8,9 +8,9 @@ import chalk from 'chalk'
 import { updateFile, diff } from '../../../scripts/helpers.js'
 
 
-export default async function updateGoogleDriveData() {
+export default async function updateGoogleDriveDataFrom(folderId) {
 	let liveDataFile = path.resolve(__dirname, './data.json')
-  let freshData = await await getFilesFromGoogleDriveFolder('0B5LhVy_zkvWqc2N1ZTNPeFFFLTA') // folder Id as argument
+  let freshData = await await getFilesFromGoogleDriveFolder(folderId) // folder Id as argument
   let liveData = require(liveDataFile)
 
   // if there's a difference between the data live on the site now and the data just scraped from medium

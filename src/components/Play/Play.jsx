@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Relay from 'react-relay'
 import s from './Play.scss'
-import { Col, Row } from 'react-bootstrap'
+import { Row, Grid } from 'react-bootstrap'
 import PlayList from './PlayList/PlayList';
 import HeaderImage from '../Misc/HeaderImage/HeaderImage'
 
@@ -23,12 +23,14 @@ class Play extends Component {
         />
 
 	      {/* Play Content Section */}
-	      <section className={classNames('container', s.content)}>
-          <Row>
-            <h1>Play</h1>
-            <p>Although Alex loves his work more than just about anything else, he also loves to play. :)</p>
-          </Row>
-          <PlayList viewer={this.props.viewer} />
+	      <section className={s.content}>
+          <Grid>
+            <Row>
+              <h1>Play</h1>
+              <p>Although Alex loves his work more than just about anything else, he also loves to play. :)</p>
+            </Row>
+            <PlayList viewer={this.props.viewer} />
+          </Grid>
 	      </section>
 
       </div>

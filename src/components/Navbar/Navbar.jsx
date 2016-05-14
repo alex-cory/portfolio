@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NavSection from './NavSection/NavSection'
 import NavButton from './NavButton/NavButton'
 import s from './Navbar.scss'
+import { Grid } from 'react-bootstrap'
 
 export default class Navbar extends Component {
 	constructor(props) {
@@ -56,7 +57,7 @@ export default class Navbar extends Component {
 	render() {
 	  return (
 			<nav className={classNames(s.nav, 'navbar', 'navbar-custom', 'navbar-fixed-top')} role="navigation">
-				<div className="container">
+				<Grid>
 					<div className="collapse navbar-collapse  navbar-main-collapse">
 						<NavSection side="left">
 							{/* In case you were wondering. `my` is defined in `server.js` under the `ProvidePlugin` */}
@@ -75,7 +76,7 @@ export default class Navbar extends Component {
 							<NavButton name="contact"/>
 						</NavSection>
 					</div>
-		    </div>
+		    </Grid>
 	    </nav>
     )
 	}

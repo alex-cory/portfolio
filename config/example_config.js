@@ -21,7 +21,10 @@ export const google = {
   AUTH_URI: "https://accounts.google.com/o/oauth2/auth",
   TOKEN_URI: "https://accounts.google.com/o/oauth2/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  javascript_origins: ["http://alexcory.com"] /* callback uri */
+  javascript_origins: ["http://alexcory.com"], /* callback uri */
+  drive: {
+    folderId: '0B5LhVy_zkvWqc2N1ZTNPeFFFLTA'
+  }
 }
 
 export const linkedin = {
@@ -74,6 +77,8 @@ export const evernote = {
 export const host = 'localhost:8080'
 
 export const medium = {
+  username: 'alexcory',
+  url: 'https://medium.com/@alexcory',
   USER_ID: '',
   CLIENT_ID: '',
   CLIENT_SECRET: '',

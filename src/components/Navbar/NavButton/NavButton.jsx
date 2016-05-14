@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import s from './NavButton.scss'
 
 export default class NavButton extends Component {

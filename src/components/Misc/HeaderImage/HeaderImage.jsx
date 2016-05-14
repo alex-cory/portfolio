@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import { Grid } from 'react-bootstrap'
 import s from './HeaderImage.scss'
-import { Col } from 'react-bootstrap'
 
 export default class HeaderImage extends Component {
 	constructor(props) {
@@ -19,12 +19,12 @@ export default class HeaderImage extends Component {
 
     return (
       <section className={classNames(s.display, this.props.customClass)} style={styles} >
-        <div className={classNames('container', 'text-left')}>
+        <Grid>
           <div style={{float: this.props.position}}>
             <h1 className={s.brandHeading}>{this.props.title}</h1>
             <p className={classNames(s.introText, 'pull-left')}>{this.props.caption}</p>
           </div>
-        </div>
+        </Grid>
       </section>
     );
   }

@@ -10,9 +10,9 @@ import chalk from 'chalk'
 import { updateFile, diff } from '../../../scripts/helpers.js'
 
 
-export default async function updateReposData() {
+export default async function updateReposDataFrom(username) {
 	let liveDataFile = path.resolve(__dirname, './data.json')
-  let freshData = await getReposDataFrom('alex-cory')
+  let freshData = await getReposDataFrom(username)
   let liveData = require(liveDataFile)
 
   // if there's a difference between the data live on the site now and the data just scraped from medium
