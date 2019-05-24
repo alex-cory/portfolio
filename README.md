@@ -1,6 +1,8 @@
 Relay Portfolio
 ===============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/alex-cory/portfolio.svg)](https://greenkeeper.io/)
+
 This is my portfolio that I built using Facebooks new React, Relay and GraphQL.  I happened to use AWS's EC2 to host so I will cover setting that up in this as well.
 
 ### Config
